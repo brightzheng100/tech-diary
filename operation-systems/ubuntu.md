@@ -63,6 +63,60 @@ enp0s8    Link encap:Ethernet  HWaddr 08:00:27:44:a1:a8
           RX bytes:7129 (7.1 KB)  TX bytes:5521 (5.5 KB)
 ```
 
+## Bionic - 18.04 LTS
+
+### Enable dual network interfaces for VirtualBox
+
+```text
+$ cd /etc/netplan/
+
+$ cat 50-cloud-init.yaml
+network:
+  version: 2
+  ethernets:
+    enp0s3:
+      dhcp4: yes
+
+$ sudo vi 50-cloud-init.yaml
+network:
+  version: 2
+  ethernets:
+    enp0s3:
+      dhcp4: yes
+    enp0s8:
+      dhcp4: yes
+
+$ sudo netplan apply
+
+$ ifconfig
+enp0s3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.56.107  netmask 255.255.255.0  broadcast 192.168.56.255
+        inet6 fe80::a00:27ff:fe2b:4295  prefixlen 64  scopeid 0x20<link>
+        ether 08:00:27:2b:42:95  txqueuelen 1000  (Ethernet)
+        RX packets 64  bytes 10751 (10.7 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 70  bytes 10955 (10.9 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+enp0s8: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.3.15  netmask 255.255.255.0  broadcast 10.0.3.255
+        inet6 fe80::a00:27ff:fe7a:edcf  prefixlen 64  scopeid 0x20<link>
+        ether 08:00:27:7a:ed:cf  txqueuelen 1000  (Ethernet)
+        RX packets 14  bytes 2232 (2.2 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 42  bytes 3868 (3.8 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 1024  bytes 73520 (73.5 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1024  bytes 73520 (73.5 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+```
+
 ## Focal Fossa - 20.04 LTS
 
 ### Enable dual network interfaces for VirtualBox
