@@ -67,6 +67,8 @@ enp0s8    Link encap:Ethernet  HWaddr 08:00:27:44:a1:a8
 
 ### Enable dual network interfaces for VirtualBox
 
+Ref: [https://linuxconfig.org/how-to-configure-static-ip-address-on-ubuntu-18-04-bionic-beaver-linux](https://linuxconfig.org/how-to-configure-static-ip-address-on-ubuntu-18-04-bionic-beaver-linux)
+
 ```text
 $ cd /etc/netplan/
 
