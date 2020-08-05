@@ -1,4 +1,4 @@
-# Spring Boot 2 Issues & Solutions
+# Spring Boot 2 Tips & FAQ
 
 ## JPA
 
@@ -58,4 +58,18 @@ Check out the Spring Boot doc, [here](https://docs.spring.io/spring-boot/docs/cu
 > If you use the `spring-boot-starter-jdbc` or `spring-boot-starter-data-jpa` “starters”, you automatically get a dependency to `HikariCP`.
 
 So we either use the default by simply adding `org.springframework.boot:spring-boot-starter-data-jpa` dependency without excluding `HikariCP`, or explicitly adding your preferred pooling library.
+
+## Debug
+
+### Start Spring Boot App in Debug Mode
+
+It's very easy to start Spring Boot appp in debug mode when using `org.springframework.boot:spring-boot-maven-plugin` Maven plugin:
+
+```text
+$ mvn -Dmaven.test.skip=true \
+    -Dspring-boot.run.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005" \
+    spring-boot:run
+```
+
+
 
