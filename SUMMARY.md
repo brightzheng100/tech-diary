@@ -6,17 +6,17 @@
 
 * [Spring Boot 2 Tips & FAQ](java-development/spring-boot-2-issues-and-solutions.md)
 * [Maven Tips & FAQ](java-development/maven-tips-and-faq.md)
+* [JDKs and IDEs Tips & FAQ](java-development/jdks-and-ides-tips-and-faq.md)
+* [Unit Test Tips & FAQ](java-development/unit-test-tips-and-faq.md)
 
 ## Operation Systems
 
-* [Unit Test Tips & FAQ](operation-systems/unit-test-tips-and-faq.md)
 * [RHEL](operation-systems/rhel.md)
-* [JDKs and IDEs Tips & FAQ](operation-systems/jdks-and-ides-tips-and-faq.md)
 * [Ubuntu](operation-systems/ubuntu.md)
+* [Centos](operation-systems/centos.md)
 
 ## Go Development
 
-* [Centos](go-development/centos.md)
 * [Untitled](go-development/untitled.md)
 
 ## Kubernetes & RHOCP
