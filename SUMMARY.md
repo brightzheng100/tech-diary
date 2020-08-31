@@ -9,22 +9,25 @@
 * [JDKs and IDEs Tips & FAQ](java-development/jdks-and-ides-tips-and-faq.md)
 * [Unit Test Tips & FAQ](java-development/unit-test-tips-and-faq.md)
 
-## Operation Systems
-
-* [RHEL](operation-systems/rhel.md)
-* [Ubuntu](operation-systems/ubuntu.md)
-* [Centos](operation-systems/centos.md)
-
 ## Go Development
 
 * [Untitled](go-development/untitled.md)
 
 ## Kubernetes & RHOCP
 
+## Operating Systems <a id="operation-systems"></a>
+
+* [RHEL](operation-systems/rhel.md)
+* [Ubuntu](operation-systems/ubuntu.md)
+* [Centos](operation-systems/centos.md)
+
+## DevOps
+
+* [Git & GitHub Tips](devops/git-and-github-tips.md)
+
 ## Kubernetes
 
 * [FAQs](kubernetes/faqs.md)
-* [Untitled](kubernetes/untitled.md)
 
 ## Communities
 
