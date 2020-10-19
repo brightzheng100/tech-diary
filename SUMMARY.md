@@ -2,6 +2,14 @@
 
 * [Overview](README.md)
 
+## Kubernetes
+
+* [FAQs](kubernetes/faqs.md)
+
+## Docker
+
+* [FAQs](docker/faqs.md)
+
 ## Java Development
 
 * [Spring Boot 2 Tips & FAQ](java-development/spring-boot-2-issues-and-solutions.md)
@@ -13,8 +21,6 @@
 
 * [Untitled](go-development/untitled.md)
 
-## Kubernetes & RHOCP
-
 ## Operating Systems <a id="operation-systems"></a>
 
 * [RHEL](operation-systems/rhel.md)
@@ -24,10 +30,6 @@
 ## DevOps
 
 * [Git & GitHub Tips](devops/git-and-github-tips.md)
-
-## Kubernetes
-
-* [FAQs](kubernetes/faqs.md)
 
 ## Communities
 
