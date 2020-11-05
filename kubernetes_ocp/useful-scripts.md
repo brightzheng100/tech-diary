@@ -225,6 +225,15 @@ So if we want to check what extra CRDs are added, on top of the new baseline wit
 
 ```text
 # List all CRDs added on top of default ones from ROKS + RHACM
-kg crd -o json | jq -r '.items[].metadata.name' | grep -Ev "$(cat _crds_roks.txt | tr '\n' '|')""|""$(cat _crds_rhacm.txt | tr '\n' '|')"
+$ kg crd -o json | jq -r '.items[].metadata.name' | \
+  grep -Ev "$(cat _crds_roks.txt | tr '\n' '|')""|""$(cat _crds_rhacm.txt | tr '\n' '|')"
+```
+
+And if one wants to delete those "extra" CRDs to reset something, do this:
+
+```text
+$ kg crd -o json | jq -r '.items[].metadata.name' | \
+  grep -Ev "$(cat _crds_roks.txt | tr '\n' '|')""|""$(cat _crds_rhacm.txt | tr '\n' '|')" | \
+  xargs kubectl delete crd
 ```
 
