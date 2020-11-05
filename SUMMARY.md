@@ -4,6 +4,7 @@
 
 ## Kubernetes
 
+* [Useful Scripts](kubernetes/useful-scripts.md)
 * [FAQs](kubernetes/faqs.md)
 
 ## Docker
