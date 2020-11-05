@@ -2,10 +2,10 @@
 
 * [Overview](README.md)
 
-## Kubernetes
+## Kubernetes & OCP <a id="kubernetes_ocp"></a>
 
-* [Useful Scripts](kubernetes/useful-scripts.md)
-* [FAQs](kubernetes/faqs.md)
+* [Useful Scripts](kubernetes_ocp/useful-scripts.md)
+* [FAQs](kubernetes_ocp/faqs.md)
 
 ## Docker
 
