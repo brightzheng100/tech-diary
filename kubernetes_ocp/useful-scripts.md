@@ -63,12 +63,8 @@ $ kg crd -o json | jq -r '.items[].metadata.name'
 The default CRDs in ROKS include:
 
 ```text
-aksclusterproviderspecs.aks.mcm.ibm.com
 alertmanagers.monitoring.coreos.com
-alertrules.monitoringcontroller.cloud.ibm.com
 apiservers.config.openshift.io
-applications.app.k8s.io
-auditpolicies.audit.policies.ibm.com
 authentications.config.openshift.io
 authentications.operator.openshift.io
 baremetalhosts.metal3.io
@@ -78,22 +74,11 @@ blockaffinities.crd.projectcalico.org
 builds.config.openshift.io
 catalogsourceconfigs.operators.coreos.com
 catalogsources.operators.coreos.com
-certificatepolicies.policies.ibm.com
-certificaterequests.certmanager.k8s.io
-certificates.certmanager.k8s.io
-challenges.certmanager.k8s.io
-channels.app.ibm.com
-clients.oidc.security.ibm.com
-clusterimagepolicies.securityenforcement.admission.cloud.ibm.com
 clusterinformations.crd.projectcalico.org
-clusterissuers.certmanager.k8s.io
 clusteroperators.config.openshift.io
 clusterresourcequotas.quota.openshift.io
-clusters.cluster.k8s.io
-clusterservicestatuses.clusterhealth.ibm.com
 clusterserviceversions.operators.coreos.com
 clusterversions.config.openshift.io
-compliances.compliance.mcm.ibm.com
 configs.imageregistry.operator.openshift.io
 configs.samples.operator.openshift.io
 consoleclidownloads.console.openshift.io
@@ -104,23 +89,15 @@ consoles.config.openshift.io
 consoles.operator.openshift.io
 consoleyamlsamples.console.openshift.io
 credentialsrequests.cloudcredential.openshift.io
-deployables.app.ibm.com
 dnses.config.openshift.io
 dnses.operator.openshift.io
 dnsrecords.ingress.operator.openshift.io
-eksclusterproviderspecs.eks.mcm.ibm.com
 featuregates.config.openshift.io
 felixconfigurations.crd.projectcalico.org
-gkeclusterproviderspecs.gke.mcm.ibm.com
 globalnetworkpolicies.crd.projectcalico.org
 globalnetworksets.crd.projectcalico.org
-helmreleases.app.ibm.com
 hostendpoints.crd.projectcalico.org
-iampolicies.iam.policies.ibm.com
-ibmservicesplatforms.operator.ibm.com
-iksclusterproviderspecs.iks.mcm.ibm.com
 imagecontentsourcepolicies.operator.openshift.io
-imagepolicies.securityenforcement.admission.cloud.ibm.com
 images.config.openshift.io
 infrastructures.config.openshift.io
 ingresscontrollers.operator.openshift.io
@@ -132,31 +109,23 @@ ipamconfigs.crd.projectcalico.org
 ipamhandles.crd.projectcalico.org
 ippools.crd.projectcalico.org
 ippools.whereabouts.cni.cncf.io
-issuers.certmanager.k8s.io
 kubeapiservers.operator.openshift.io
 kubecontrollermanagers.operator.openshift.io
 kubeschedulers.operator.openshift.io
 mcoconfigs.machineconfiguration.openshift.io
-monitoringdashboards.monitoringcontroller.cloud.ibm.com
-navconfigurations.foundation.ibm.com
 network-attachment-definitions.k8s.cni.cncf.io
 networkpolicies.crd.projectcalico.org
 networks.config.openshift.io
 networks.operator.openshift.io
 networksets.crd.projectcalico.org
 oauths.config.openshift.io
-ocpclusterproviderspecs.ocp.mcm.ibm.com
 openshiftapiservers.operator.openshift.io
 openshiftcontrollermanagers.operator.openshift.io
 operatorgroups.operators.coreos.com
 operatorhubs.config.openshift.io
 operatorpkis.network.operator.openshift.io
 operatorsources.operators.coreos.com
-orders.certmanager.k8s.io
-passwordrules.icp.ibm.com
-placementrules.app.ibm.com
 podmonitors.monitoring.coreos.com
-policies.policy.mcm.ibm.com
 projects.config.openshift.io
 prometheuses.monitoring.coreos.com
 prometheusrules.monitoring.coreos.com
@@ -169,7 +138,6 @@ servicecas.operator.openshift.io
 servicecatalogapiservers.operator.openshift.io
 servicecatalogcontrollermanagers.operator.openshift.io
 servicemonitors.monitoring.coreos.com
-subscriptions.app.ibm.com
 subscriptions.operators.coreos.com
 tigerastatuses.operator.tigera.io
 tuneds.tuned.openshift.io
@@ -179,7 +147,7 @@ We then can set a baseline as a file, say name `_crds_roks.txt`. After installat
 
 ```text
 # List all CRDs added on top of default ones from ROKS
-$ kg crd -o json | jq -r '.items[].metadata.name' | grep -Ev "$(cat _roks_default_crds.txt | tr '\n' '|')"
+$ kg crd -o json | jq -r '.items[].metadata.name' | grep -Ev "$(cat _crds_roks.txt | tr '\n' '|')"
 ```
 
 Then we would get a list like:
@@ -233,7 +201,7 @@ And if one wants to delete those "extra" CRDs to reset something, do this:
 
 ```text
 $ kg crd -o json | jq -r '.items[].metadata.name' | \
-  grep -Ev "$(cat _crds_roks.txt | tr '\n' '|')""|""$(cat _crds_rhacm.txt | tr '\n' '|')" | \
+  grep -Ev "$(cat _crds_roks.txt | tr '\n' '|')|$(cat _crds_rhacm.txt | tr '\n' '|')" | \
   xargs kubectl delete crd
 ```
 
