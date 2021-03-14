@@ -21,6 +21,7 @@
 ## Go Development
 
 * [Cobra Walkthrough Guide](go-development/untitled.md)
+* [Go Template Walkthrough Guide](go-development/go-template-walkthrough-guide.md)
 
 ## Operating Systems <a id="operation-systems"></a>
 
