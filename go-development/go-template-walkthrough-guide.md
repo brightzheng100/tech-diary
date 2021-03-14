@@ -196,8 +196,170 @@ $ go run html.go
 > ```text
 > t, err := template.New("html-template").ParseFiles(paths...)
 > ```
+>
+> So the template name MUST be the FIRST FILE NAME if there are many template files.
 
+How if we have multiple template files?
 
+We need to `define` the template names:
+
+```text
+$ cat > todo.tpl <<EOF
+{{ define "todo" }}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Go To-Do list 1</title>
+  </head>
+  <body>
+    <p>
+      To-Do list for user: {{ .User }} 
+    </p>
+    <table>
+      	<tr>
+          <td>Task</td>
+          <td>Done</td>
+    	</tr>
+      	{{ with .List }}
+			{{ range . }}
+      			<tr>
+              		<td>{{ .Name }}</td>
+              		<td>{{ if .Done }}Yes{{ else }}No{{ end }}</td>
+      			</tr>
+			{{ end }} 
+      	{{ end }}
+    </table>
+  </body>
+</html>
+{{ end }}
+
+EOF
+
+$ cat > todo2.tpl <<EOF
+{{ define "todo2" }}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Go To-Do list 2</title>
+  </head>
+  <body>
+    <p>
+      To-Do list for user: {{ .User }} 
+    </p>
+    <table>
+      	<tr>
+          <td>Task</td>
+          <td>Done</td>
+    	</tr>
+      	{{ with .List }}
+			{{ range . }}
+      			<tr>
+              		<td>{{ .Name }}</td>
+              		<td>{{ if .Done }}Yes{{ else }}No{{ end }}</td>
+      			</tr>
+			{{ end }} 
+      	{{ end }}
+    </table>
+  </body>
+</html>
+{{ end }}
+EOF
+
+$ cat > html.go <<EOF
+package main
+
+import (
+	"html/template"
+	"os"
+)
+
+type entry struct {
+	Name string
+	Done bool
+}
+
+type ToDo struct {
+	User string
+	List []entry
+}
+
+func main() {
+	todos := ToDo{
+		User: "Tom",
+		List: []entry{
+			{
+				Name: "TOTO Item 1",
+				Done: true,
+			},
+			{
+				Name: "TOTO Item 2",
+				Done: false,
+			},
+		},
+	}
+
+	// Files are provided as a slice of strings.
+	paths := []string{
+		"todo.tpl",
+		"todo2.tpl",
+	}
+
+	t, err := template.New("todo").ParseFiles(paths...)
+	if err != nil {
+		panic(err)
+	}
+	err = t.Execute(os.Stdout, todos)
+	if err != nil {
+		panic(err)
+	}
+}
+
+EOF
+
+$ go run html.go
+```
+
+But we get only first file `todo.tpl` parsed and printed. Why? The solution here is to refer/include those we want in the first template:
+
+```text
+$ cat > todo.tpl <<EOF
+{{ define "todo" }}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Go To-Do list 1</title>
+  </head>
+  <body>
+    <p>
+      To-Do list for user: {{ .User }} 
+    </p>
+    <table>
+      	<tr>
+          <td>Task</td>
+          <td>Done</td>
+    	</tr>
+      	{{ with .List }}
+			{{ range . }}
+      			<tr>
+              		<td>{{ .Name }}</td>
+              		<td>{{ if .Done }}Yes{{ else }}No{{ end }}</td>
+      			</tr>
+			{{ end }} 
+      	{{ end }}
+    </table>
+  </body>
+</html>
+
+{{ template "todo2" . }}
+
+{{ end }}
+EOF
+```
+
+Please note this line: `{{ template "todo2" . }}`
 
 ## References
 
