@@ -205,3 +205,11 @@ $ kg crd -o json | jq -r '.items[].metadata.name' | \
   xargs kubectl delete crd
 ```
 
+## Clean Up ~/.kube/config
+
+To clean up all kubeconfig within `~/.kube/config` except `docker-desktop`:
+
+```text
+for c in `kctx | grep -v docker-desktop`; kctx -d $c
+```
+

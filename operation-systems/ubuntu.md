@@ -10,6 +10,27 @@ $ sudo timedatectl set-timezone Asia/Singapore
 $ date
 ```
 
+### How to Fix ‘E: Could not get lock /var/lib/dpkg/lock’ Error in Ubuntu Linux
+
+When trying to install components but saw this: `E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?`
+
+This may be some `apt-get install` process is happening:
+
+```text
+$ ps aux | grep -i apt
+root        7025  0.0  0.0   2608   476 ?        Ss   12:17   0:00 /bin/sh /usr/lib/apt/apt.systemd.daily install
+root        7029  0.0  0.0   2608  1656 ?        S    12:17   0:00 /bin/sh /usr/lib/apt/apt.systemd.daily lock_is_held install
+bright     12846  0.0  0.0   8156  2580 pts/0    S+   12:20   0:00 grep --color=auto -i ap
+```
+
+Just wait for a couple of minutes, it will be okay after the auto update process is done. To disable the auto update process:
+
+```text
+$ sudo vi /etc/apt/apt.conf.d/20auto-upgrades
+APT::Periodic::Update-Package-Lists "0";
+APT::Periodic::Unattended-Upgrade "0";
+```
+
 ## Xenial - 16.04 LTS
 
 ### Enable dual network interfaces for VirtualBox
