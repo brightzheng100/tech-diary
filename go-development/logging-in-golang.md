@@ -23,7 +23,7 @@ func main() {
 }
 EOF
 
-$ go run native-logging.go
+$ go run native.go
 INFO[0000] Hello world!
 INFO[0000] Something is interesting!
 WARN[0000] Something bad may come!
@@ -255,6 +255,47 @@ Notice that the Debug level message was not printed. To include it in the logs, 
 ```text
 log.SetLevel(log.DebugLevel)
 ```
+
+#### Logging Method Name
+
+```text
+log.SetReportCaller(true)
+```
+
+#### Using Fields
+
+```text
+log.WithFields(log.Fields{
+  "event": event,
+  "topic": topic,
+  "key": key,
+}).Fatal("Failed to send event")
+```
+
+#### Default Fields
+
+Often it's helpful to have fields always attached to log statements in an application or parts of one. For example, you may want to always log the `request_id` and `user_ip` in the context of a request. Instead of writing `log.WithFields(log.Fields{"request_id": request_id, "user_ip": user_ip})` on every line, you can create a logrus.Entry to pass around instead:
+
+```text
+requestLogger := log.WithFields(log.Fields{
+    "user_id": "u1234",
+    "tx_id":   "t0001",
+})
+requestLogger.Info("user activity")
+
+log.Warn("You should probably take a look at this.")
+log.Error("Something failed but I'm not quitting.")
+```
+
+We got this -- note that only `user activity` logs logged with extra fields:
+
+```text
+{"level":"info","msg":"user activity","time":"2021-03-15T12:48:09+08:00","tx_id":"t0001","user_id":"u1234"}
+{"level":"warning","msg":"You should probably take a look at this.","time":"2021-03-15T12:48:09+08:00"}
+{"level":"error","msg":"Something failed but I'm not quitting.","time":"2021-03-15T12:48:09+08:00"}
+```
+
+
 
 
 
