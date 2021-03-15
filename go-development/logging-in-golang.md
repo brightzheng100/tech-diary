@@ -250,7 +250,7 @@ We will get:
 exit status 1
 ```
 
-Notice that the Debug level message was not printed. To include it in the logs, set log.Level to equal log.DebugLevel:
+Notice that the Debug level message was not printed. To include it in the logs, set log level to equal `log.DebugLevel`:
 
 ```text
 log.SetLevel(log.DebugLevel)
@@ -295,9 +295,69 @@ We got this -- note that only `user activity` logs logged with extra fields:
 {"level":"error","msg":"Something failed but I'm not quitting.","time":"2021-03-15T12:48:09+08:00"}
 ```
 
+#### Hooks
 
+There are many hooks, besides the built-in ones: [https://github.com/sirupsen/logrus/wiki/Hooks](https://github.com/sirupsen/logrus/wiki/Hooks)
 
+A simple writer-based hook mechanism can be implemented like:
 
+```text
+package main
+
+import (
+	"io/ioutil"
+	"os"
+
+	log "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus/hooks/writer"
+)
+
+func main() {
+	log.SetOutput(ioutil.Discard) // Send all logs to nowhere by default
+
+	log.AddHook(&writer.Hook{ // Send logs with level higher than warning to stderr
+		Writer: os.Stderr,
+		LogLevels: []log.Level{
+			log.PanicLevel,
+			log.FatalLevel,
+			log.ErrorLevel,
+			log.WarnLevel,
+		},
+	})
+	log.AddHook(&writer.Hook{ // Send info and debug logs to stdout
+		Writer: os.Stdout,
+		LogLevels: []log.Level{
+			log.InfoLevel,
+			log.DebugLevel,
+		},
+	})
+	log.Info("This will go to stdout")
+	log.Warn("This will go to stderr")
+}
+```
+
+Now:
+
+```text
+$ go run logrus-hooks.go
+time="2021-03-15T13:59:37+08:00" level=info msg="This will go to stdout"
+time="2021-03-15T13:59:37+08:00" level=warning msg="This will go to stderr"
+```
+
+#### Formatters
+
+The built-in logging formatters are `logrus.TextFormatter`, `logrus.JSONFormatter`.
+
+There is a series of 3rd party fomatters too:
+
+* [`FluentdFormatter`](https://github.com/joonix/log). Formats entries that can be parsed by Kubernetes and Google Container Engine.
+* [`GELF`](https://github.com/fabienm/go-logrus-formatters). Formats entries so they comply to Graylog's [GELF 1.1 specification](http://docs.graylog.org/en/2.4/pages/gelf.html).
+* [`logstash`](https://github.com/bshuster-repo/logrus-logstash-hook). Logs fields as [Logstash](http://logstash.net/) Events.
+* [`prefixed`](https://github.com/x-cray/logrus-prefixed-formatter). Displays log entry source along with alternative layout.
+* [`zalgo`](https://github.com/aybabtme/logzalgo). Invoking the Power of Zalgo.
+* [`nested-logrus-formatter`](https://github.com/antonfisher/nested-logrus-formatter). Converts logrus fields to a nested structure.
+* [`powerful-logrus-formatter`](https://github.com/zput/zxcTool). get fileName, log's line number and the latest function's name when print log; Sava log to files.
+* [`caption-json-formatter`](https://github.com/nolleh/caption_json_formatter). logrus's message json formatter with human-readable caption added.
 
 ## References
 
