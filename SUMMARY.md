@@ -22,6 +22,7 @@
 
 * [Cobra Walkthrough Guide](go-development/untitled.md)
 * [Go Template Walkthrough Guide](go-development/go-template-walkthrough-guide.md)
+* [Logging in Golang](go-development/logging-in-golang.md)
 
 ## Operating Systems <a id="operation-systems"></a>
 
