@@ -111,5 +111,9 @@ Git Repo: [https://github.com/fvbock/endless](https://github.com/fvbock/endless)
 
 Description: Zero downtime restarts for golang HTTP and HTTPS servers. \(for golang 1.3+\)
 
+Similar to graceful but have a **fetcher** to fetch the updated binary to "upgrade" itself.
+
+
+
 
 
