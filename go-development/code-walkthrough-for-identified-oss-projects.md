@@ -6,7 +6,7 @@ Git Repo: [https://github.com/kuangchanglang/graceful](https://github.com/kuangc
 
 Description: Inspired by [overseer](https://github.com/jpillora/overseer) and [endless](https://github.com/fvbock/endless), with minimum codes and handy api to make http server graceful.
 
-### options or optional configs:
+### options or optional configs
 
 ```go
 var (
@@ -113,7 +113,29 @@ Description: Zero downtime restarts for golang HTTP and HTTPS servers. \(for gol
 
 Similar to graceful but have a **fetcher** to fetch the updated binary to "upgrade" itself.
 
+## Golang-LRU
 
+Git Repo: [https://github.com/hashicorp/golang-lru.git](https://github.com/hashicorp/golang-lru.git)
 
+Description: This provides the lru package which implements a fixed-size thread safe LRU cache. It is based on the cache in Groupcache.
 
+A map + a doubly LinkedList is the best way to implement LRU cache.
+
+In Golang, it's `map[interface{}]*list.Element` + `container/list.List`:
+
+```go
+// LRU implements a non-thread safe fixed size LRU cache
+type LRU struct {
+	size      int
+	evictList *list.List
+	items     map[interface{}]*list.Element
+	onEvict   EvictCallback
+}
+
+// entry is used to hold a value in the evictList
+type entry struct {
+	key   interface{}
+	value interface{}
+}
+```
 
